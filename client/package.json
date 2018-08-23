@@ -9,6 +9,7 @@
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "jwt-decode": "^2.2.0",
     "morgan": "^1.9.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
@@ -16,7 +17,8 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

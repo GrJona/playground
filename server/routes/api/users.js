@@ -58,9 +58,11 @@ router.post('/register', (req, res) => {
 // @access  Public
 router.post('/login', (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
-
+  
+  
   // Check Validation
   if (!isValid) {
+    console.log('not valid');
     return res.status(400).json(errors);
   }
 
@@ -74,7 +76,7 @@ router.post('/login', (req, res) => {
       errors.email = 'User not found';
       return res.status(404).json(errors);
     }
-
+    console.log(user);
     // Check Password
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {

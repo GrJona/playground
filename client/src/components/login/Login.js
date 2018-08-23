@@ -24,9 +24,27 @@ class Login extends React.PureComponent {
     });
   };
 
+  
+  componentDidMount() {
+    if (this.props.auth.loggedIn) {
+      this.props.history.push('/dashboard');
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.loggedIn) {
+      this.props.history.push('/dashboard');
+    }
+
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   handleLoginFormSubmit = e => {
     e.preventDefault();
     console.log(`form was submitted with ${this.state.email} and ${this.state.password}`);
+    this.props.handleLoginSubmit(this.state.email, this.state.password);
   };
 
   render() {
@@ -47,7 +65,13 @@ class Login extends React.PureComponent {
               </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="password">Password</InputLabel>
-                <Input name="password" type="password" id="password" autoComplete="current-password"  onChange={this.handleInputOnChange}/>
+                <Input
+                  name="password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={this.handleInputOnChange}
+                />
               </FormControl>
               <Button type="submit" fullWidth variant="raised" color="primary" className={classes.submit}>
                 Sign in
