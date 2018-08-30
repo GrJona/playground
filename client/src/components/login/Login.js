@@ -19,12 +19,13 @@ class Login extends React.PureComponent {
   };
 
   handleInputOnChange = e => {
+    //console.log('handleInputchange', e.target);
+    
     this.setState({
       [e.target.name]: e.target.value
     });
   };
 
-  
   componentDidMount() {
     if (this.props.auth.loggedIn) {
       this.props.history.push('/dashboard');
@@ -32,6 +33,8 @@ class Login extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('in compwillreceiveprops login', nextProps);
+    //return;
     if (nextProps.auth.loggedIn) {
       this.props.history.push('/dashboard');
     }
@@ -61,11 +64,19 @@ class Login extends React.PureComponent {
             <form className={classes.form} onSubmit={this.handleLoginFormSubmit}>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="email">Email Address</InputLabel>
-                <Input id="email" name="email" autoComplete="email" onChange={this.handleInputOnChange} autoFocus />
+                <Input
+                  data-hook="login-email-input"
+                  id="email"
+                  name="email"
+                  autoComplete="email"
+                  onChange={this.handleInputOnChange}
+                  autoFocus
+                />
               </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input
+                  data-hook="login-password-input"
                   name="password"
                   type="password"
                   id="password"
@@ -73,7 +84,14 @@ class Login extends React.PureComponent {
                   onChange={this.handleInputOnChange}
                 />
               </FormControl>
-              <Button type="submit" fullWidth variant="raised" color="primary" className={classes.submit}>
+              <Button
+                data-hook="login-submit-button"
+                type="submit"
+                fullWidth
+                variant="raised"
+                color="primary"
+                className={classes.submit}
+              >
                 Sign in
               </Button>
             </form>

@@ -1,6 +1,7 @@
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILTURE = 'LOGIN_FAILTURE';
+export const LOGOUT = 'LOGOUT';
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -8,4 +9,6 @@ export const REGISTER_FAILTURE = 'REGISTER_FAILTURE';
 
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
-export const LOGOUT = 'LOGOUT';
+export const SET_TOKEN = 'SET_TOKEN';
+export const REMOVE_TOKEN = 'REMOVE_TOKEN';
+export const APP_INIT = 'APP_INIT';

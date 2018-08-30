@@ -3,8 +3,15 @@ import * as actionTypes from './actionTypes';
 import jwt_decode from 'jwt-decode';
 import { setCurrentUser } from './users.actions';
 import { setAuthToken } from '../utils/setAuthToken';
+import httpAdapter from 'axios/lib/adapters/http';
+
+//const baseURL = 'http://localhost:3003';
+
+//axios.defaults.baseURL = baseURL;
+axios.defaults.adapter = httpAdapter;
 
 export const login = (email, password) => {
+  console.log('in login request action');
   return dispatch => {
     dispatch(loginRequest(email));
     return axios
@@ -12,12 +19,18 @@ export const login = (email, password) => {
       .then(res => {
         const { token } = res.data;
         localStorage.setItem('jwtToken', token);
+        //TODO: Transform thunk to to middleware
+        //dispatch(setToken(token));
         setAuthToken(token);
         const decodedUserData = jwt_decode(token);
-        dispatch(loginSuccess(email))
+        console.log('in login request action - dispatching success');
+        dispatch(loginSuccess(email));
         dispatch(setCurrentUser(decodedUserData));
       })
-      .catch(error => dispatch(loginFailure(error)));
+      .catch(error => {
+        console.log('err', error);
+        return dispatch(loginFailure(error));
+      });
   };
 };
 
@@ -36,12 +49,21 @@ const loginFailure = error => ({
   error
 });
 
+const setToken = token => ({
+  type: actionTypes.SET_TOKEN,
+  token
+});
+
+const removeToken = () => ({
+  type: actionTypes.REMOVE_TOKEN
+});
+
 export const logoutUser = () => dispatch => {
   localStorage.removeItem('jwtToken');
   setAuthToken(false);
   dispatch({
     type: actionTypes.LOGOUT
-  })
+  });
   dispatch(setCurrentUser({}));
 };
 

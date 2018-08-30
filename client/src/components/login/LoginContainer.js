@@ -3,7 +3,7 @@ import { login } from '../../actions/authentication.actions';
 import Login from './Login';
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.authData.auth
 });
 
 const mapDispatchToProps = dispatch => ({

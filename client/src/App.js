@@ -8,7 +8,7 @@ import { setAuthToken } from './utils/setAuthToken';
 import { setCurrentUser } from './actions/users.actions';
 import LoginContainer from './components/login/LoginContainer';
 import DashboardContainer from './components/dashboard/DashboardContainer';
-import PrivateRoute from './components/privateRoute/PrivateRoute';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 class App extends Component {
   componentDidMount = () => {
@@ -17,8 +17,6 @@ class App extends Component {
       const decodedUserData = jwt_decode(localStorage.jwtToken);
       const currentTime = Date.now() / 1000;
       if (decodedUserData.exp < currentTime) {
-        //store.dispatch(logoutUser());
-        // TODO: Clear current Profile
         this.props.handleLogout();
         console.log('user not autheticated');
         window.location.href = '/login';
