@@ -67,11 +67,11 @@ export const logoutUser = () => dispatch => {
   dispatch(setCurrentUser({}));
 };
 
-export const register = (name, email, password) => {
+export const register = (name, email, password, password2) => {
   return dispatch => {
     dispatch(registerRequest(email));
     return axios
-      .post('/api/users/register', { name, email, password })
+      .post('/api/users/register', { name, email, password, password2 })
       .then(res => dispatch(registerSuccess(email)))
       .catch(error => dispatch(registerFailure(error)));
   };

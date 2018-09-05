@@ -10,17 +10,17 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import styles from './login-styles';
+import styles from '../login/login-styles';
 
-class Login extends React.PureComponent {
+class Register extends React.PureComponent {
   state = {
+    name: '',
     email: '',
-    password: ''
+    password: '',
+    password2: ''
   };
 
   handleInputOnChange = e => {
-    //console.log('handleInputchange', e.target);
-
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -33,8 +33,7 @@ class Login extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('in compwillreceiveprops login', nextProps);
-    //return;
+    console.log('in compwillreceiveprops register', nextProps);
     if (nextProps.auth.loggedIn) {
       this.props.history.push('/dashboard');
     }
@@ -44,21 +43,15 @@ class Login extends React.PureComponent {
     }
   }
 
-  handleLoginFormSubmit = e => {
+  handleRegisterFormSubmit = e => {
     e.preventDefault();
-    console.log(`form was submitted with ${this.state.email} and ${this.state.password}`);
-    this.props.handleLoginSubmit(this.state.email, this.state.password);
+    this.props
+      .handleRegisterSubmit(this.state.name, this.state.email, this.state.password, this.state.password2)
+      .then(() => this.props.history.push('/login'))
+      .catch(error => console.log(`Registeration Error: ${error}`));
   };
 
-  handleSignUpRedirect = () => {
-    if (this.props.history) {
-      this.props.history.push('/register');
-    }
-  }
-
   render() {
-    // console.log(theme);
-
     const { classes } = this.props;
     return (
       <React.Fragment>
@@ -69,11 +62,22 @@ class Login extends React.PureComponent {
               <LockIcon />
             </Avatar>
             <Typography variant="headline">Sign in</Typography>
-            <form className={classes.form} onSubmit={this.handleLoginFormSubmit}>
+            <form className={classes.form} onSubmit={this.handleRegisterFormSubmit}>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="name">Name</InputLabel>
+                <Input
+                  data-hook="register-name-input"
+                  id="name"
+                  name="name"
+                  autoComplete="name"
+                  onChange={this.handleInputOnChange}
+                  autoFocus
+                />
+              </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="email">Email Address</InputLabel>
                 <Input
-                  data-hook="login-email-input"
+                  data-hook="register-email-input"
                   id="email"
                   name="email"
                   autoComplete="email"
@@ -84,7 +88,7 @@ class Login extends React.PureComponent {
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input
-                  data-hook="login-password-input"
+                  data-hook="register-password-input"
                   name="password"
                   type="password"
                   id="password"
@@ -92,25 +96,28 @@ class Login extends React.PureComponent {
                   onChange={this.handleInputOnChange}
                 />
               </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="password2">Confirm Password</InputLabel>
+                <Input
+                  data-hook="register-password2-input"
+                  name="password2"
+                  type="password"
+                  id="password2"
+                  autoComplete="confirm-password"
+                  onChange={this.handleInputOnChange}
+                />
+              </FormControl>
               <Button
-                data-hook="login-submit-button"
+                data-hook="register-submit-button"
                 type="submit"
                 fullWidth
                 variant="raised"
                 color="primary"
                 className={classes.submit}
               >
-                Sign in
+                Sign Up
               </Button>
             </form>
-            <div>
-              <Typography className={classes.loginLinkSpan} style={{ display: 'inline-block', marginRight:'5px' }} variant="caption" >
-                Don't have an account?
-              </Typography>
-              <Typography className={classes.loginLinkTypography} variant="caption" onClick={this.handleSignUpRedirect} >
-                Sign Up
-              </Typography>
-            </div>
           </Paper>
         </main>
       </React.Fragment>
@@ -118,8 +125,8 @@ class Login extends React.PureComponent {
   }
 }
 
-Login.propTypes = {
+Register.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Login);
+export default withStyles(styles)(Register);

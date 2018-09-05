@@ -7,6 +7,7 @@ import './App.css';
 import { setAuthToken } from './utils/setAuthToken';
 import { setCurrentUser } from './actions/users.actions';
 import LoginContainer from './components/login/LoginContainer';
+import RegisterContainer from "./components/register/RegisterContainer";
 import DashboardContainer from './components/dashboard/DashboardContainer';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
@@ -32,6 +33,7 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/login" component={LoginContainer} />
+          <Route exact path="/register" component={RegisterContainer} />
           <PrivateRoute path="/" component={DashboardContainer} />
         </Switch>
       </BrowserRouter>
