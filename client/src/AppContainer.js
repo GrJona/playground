@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import App from './App';
-import { setCurrentUser } from './actions/users.actions';
-import { logoutUser, loginSuccess } from './actions/authentication.actions';
+import { setCurrentUser } from './actions';
+import { logoutUser, loginSuccess } from './actions';
 
 const mapStateToProps = () => ({});
 
